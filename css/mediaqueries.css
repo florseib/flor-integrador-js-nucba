@@ -1,0 +1,13 @@
+@media (max-width: 450px) {
+  .account-links {
+    display: none;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  .show-menu {
+    display: flex;
+  }
+}
