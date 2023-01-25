@@ -1,26 +1,26 @@
+import { bookArray } from "./books.js";
+import { CartItem } from "./cartitem.js";
+
 const bookContainer = document.querySelector(".book-container");
 const categorySelect = document.querySelector("#category-select");
 
-class Book {
-  constructor(id, name, author, price, category, picture) {
-    this.id = id;
-    this.name = name;
-    this.author = author;
-    this.price = price;
-    this.category = category;
-    this.picture = picture;
-  }
-}
+const cartNumHead = document.querySelector("#cart-number-header");
+const cartNumSide = document.querySelector("#cart-number-sidebar");
 
-var bookArray;
 var categoryList;
+var cart;
 
 function init() {
+  // localStorage.clear();
+
+  // cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
   categorySelect.addEventListener("change", changeSelect);
 
-  createBookArray();
+  bookArray.sort((a, b) => a.name.localeCompare(b.name));
   createCatList();
   renderBooks(bookArray);
+  bookContainer.addEventListener("click", addProduct);
 }
 
 var changeSelect = (e) => {
@@ -33,55 +33,6 @@ var changeSelect = (e) => {
   renderBooks(books);
 };
 
-function createBookArray() {
-  bookArray = [
-    new Book(1, "Maus", "Art Spiegelman", 5300, "Comic", "images/maus.jpg"),
-    new Book(
-      2,
-      "Sandman 1",
-      "Neil Gaiman",
-      4100,
-      "Comic",
-      "images/sandman.jpg"
-    ),
-    new Book(3, "Watchmen", "Alan Moore", 5500, "Comic", "images/watchmen.jpg"),
-    new Book(
-      4,
-      "Il deserto dei tartari",
-      "Dino Buzzati",
-      5000,
-      "Novela",
-      "images/deserto.jpg"
-    ),
-    new Book(
-      5,
-      "El señor de los anillos",
-      "J.R.R. Tolkien",
-      5000,
-      "Fantasía",
-      "images/lotr.jpg"
-    ),
-    new Book(
-      6,
-      "The Black Swan",
-      "Nassim Taleb",
-      7900,
-      "Filosofía",
-      "images/blackswan.jpg"
-    ),
-    new Book(
-      7,
-      "Tractatus Logico-Philosophicus",
-      "Ludwig Wittgenstein",
-      4100,
-      "Filosofía",
-      "images/tractatus.jpg"
-    ),
-  ];
-
-  bookArray.sort((a, b) => a.name.localeCompare(b.name));
-}
-
 function createCatList() {
   categoryList = bookArray.map((element) => element.category);
   categoryList = ["Todos", ...new Set(categoryList)];
@@ -93,6 +44,7 @@ function createCatList() {
 function renderBooks(books) {
   bookContainer.innerHTML = "";
   books.forEach((book) => {
+    const id = "button-" + book.id;
     bookContainer.innerHTML += `<div class="book-card">
     <div class="img-container">
         <img src="${book.picture}">
@@ -104,18 +56,39 @@ function renderBooks(books) {
       <p>Categoría: ${book.category}</p>
     </div>
     <div class="btn-container">
-      <button value="${book.id}" id="button-${book.id}">Agregar al carrito</button>
+      <button class="btn-add" value="${book.id}" id="${id}">Agregar al carrito</button>
     </div>
 </div>`;
 
-    document
-      .querySelector("#button-" + book.id)
-      .addEventListener("click", test);
+    // document.querySelector("#" + id).addEventListener("click", test);
   });
 }
 
-const test = (e) => {
-  console.log(e);
+const addProduct = (e) => {
+  if (!e.target.classList.contains("btn-add")) return;
+  // const addedBook = bookArray.find((x) => x.id == e.target.value);
+  const hasItem = cart.find((x) => x.id == e.target.value);
+  if (!hasItem) {
+    const cartItem = new CartItem(e.target.value, 1);
+    cart = [...cart, cartItem];
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    cartNumHead.innerHTML = cart.length;
+    cartNumSide.innerHTML = cart.length;
+  } else {
+    hasItem.amount++;
+  }
+  console.log(cart);
 };
 
-this.init();
+// const test2 = (e) => {
+//   if (!e.target.classList.contains("btn-add")) return;
+//   console.log(e);
+// };
+
+// const test = (e) => {
+//   console.log(e);
+// };
+
+init();

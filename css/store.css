@@ -15,7 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 40%;
-  height: 35rem;
+  height: 41rem;
   background-color: #ffc446;
   border-radius: 30px;
   margin: 20px 5%;
@@ -65,7 +65,7 @@ body {
 
 button {
   height: 3rem;
-  border: solid 0px;
+  /* border: solid 0px; */
   width: 50%;
 }
 

@@ -4,8 +4,6 @@ const footer = document.querySelector("footer");
 
 function createLayout() {
   head.innerHTML += `
-  <script src="https://kit.fontawesome.com/72dfe57dde.js" crossorigin="anonymous"></script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./css/style.css">
@@ -29,7 +27,7 @@ function createLayout() {
       <a href="register.html">REGISTRARSE</a>
   </li>
   <li class="link">
-      <a href="cart.html">CARRITO (<span id="cart-number">0</span>)</a>
+      <a href="cart.html">CARRITO (<span id="cart-number-sidebar"></span>)</a>
   </li>
 </ul>
 <div class="menu-content account-links">
@@ -43,7 +41,7 @@ function createLayout() {
       <a href="register.html">REGISTRARSE</a>
   </div>
   <div class="link">
-  <a href="cart.html">CARRITO (0)</a>
+  <a href="cart.html">CARRITO (<span id="cart-number-header"></span>)</a>
   </div>
 </div>
 <div class="menu-content menu-icon">
@@ -54,6 +52,14 @@ function createLayout() {
   footer.innerHTML = `
   © 2022 - Floppy Seibert
   `;
+
+  const cartNumHead = document.querySelector("#cart-number-header");
+  const cartNumSide = document.querySelector("#cart-number-sidebar");
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cartNumHead.innerHTML = cart.length;
+  cartNumSide.innerHTML = cart.length;
 }
 
 this.createLayout();
