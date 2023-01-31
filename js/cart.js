@@ -3,6 +3,7 @@ import { CartItem } from "./cartitem.js";
 
 const cartNumHead = document.querySelector("#cart-number-header");
 const cartNumSide = document.querySelector("#cart-number-sidebar");
+const buyBtnContainer = document.querySelector(".buy-btn-container");
 
 const cartContainer = document.querySelector(".cart-container");
 var cart;
@@ -19,28 +20,34 @@ function init() {
 
 function renderBooks() {
   cartContainer.innerHTML = "";
-  cart.forEach((item) => {
-    const book = bookArray.find((book) => book.id === parseInt(item.id));
+  if (cart.length !== 0) {
+    cart.forEach((item) => {
+      const book = bookArray.find((book) => book.id === parseInt(item.id));
 
-    cartContainer.innerHTML += `<div class="cart-card" id="card-${book.id}" value="${book.id}">
-        <div class="card-content">
-          <div class="book-info">
-            <h2>${book.name}</h2>
-            <p>Autor: ${book.author}</p>
-            <p>Precio: $${book.price}</p>
-            <p>Categoría: ${book.category}</p>
-            <p>Cantidad: <span id="amount-${book.id}">${item.amount}</span></p>
+      cartContainer.innerHTML += `<div class="cart-card" id="card-${book.id}" value="${book.id}">
+          <div class="card-content">
+            <div class="book-info">
+              <h2>${book.name}</h2>
+              <p>Autor: ${book.author}</p>
+              <p>Precio: $${book.price}</p>
+              <p>Categoría: ${book.category}</p>
+              <p>Cantidad: <span id="amount-${book.id}">${item.amount}</span></p>
+            </div>
+            <div class="btn-container">
+              <button class="btn-add" value="${book.id}" id="book-add-${book.id}">Agregar</button>
+              <button class="btn-delete" value="${book.id}" id="book-remove-${book.id}">Quitar</button>
+            </div>
           </div>
-          <div class="btn-container">
-            <button class="btn-add" value="${book.id}" id="book-add-${book.id}">Agregar</button>
-            <button class="btn-delete" value="${book.id}" id="book-remove-${book.id}">Quitar</button>
+          <div class="image-container">
+              <img src="${book.picture}">
           </div>
-        </div>
-        <div class="image-container">
-            <img src="${book.picture}">
-        </div>
-    </div>`;
-  });
+      </div>`;
+    });
+    // buyBtnContainer.classList.remove('hidden')
+  } else {
+    cartContainer.innerHTML += `<p>Tu carrito se encuentra vacío actualmente.</p>`;
+    buyBtnContainer.classList.add("hidden");
+  }
 }
 
 const deleteProduct = (e) => {
@@ -60,6 +67,11 @@ const deleteProduct = (e) => {
 
       cartNumHead.innerHTML = cart.length;
       cartNumSide.innerHTML = cart.length;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML += `<p>Tu carrito se encuentra vacío actualmente.</p>`;
+        buyBtnContainer.classList.add("hidden");
+      }
     } else {
       deletedElement.amount--;
 

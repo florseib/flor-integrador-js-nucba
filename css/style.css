@@ -78,7 +78,8 @@ input {
   padding-right: 15px;
 }
 
-.account-links {
+button {
+  border-radius: 10px;
 }
 
 .menu-icon {
@@ -105,6 +106,28 @@ footer {
   font-size: 0.8em;
   position: absolute;
   bottom: 0px;
+}
+
+.add-notif {
+  height: 5rem;
+  padding: 15px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f3f4f6;
+  background-color: green;
+  position: fixed;
+  bottom: 1.5rem;
+  width: 25rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: all 0.5s ease-out;
+  transform: translateY(200%);
+}
+
+.active-notif {
+  transform: translateY(0);
+  transition: all 0.5s ease-in;
 }
 
 @media (max-width: 400px) {

@@ -6,9 +6,11 @@ const categorySelect = document.querySelector("#category-select");
 
 const cartNumHead = document.querySelector("#cart-number-header");
 const cartNumSide = document.querySelector("#cart-number-sidebar");
+const addNotif = document.querySelector(".add-notif");
 
 var categoryList;
 var cart;
+var canAdd = true;
 
 function init() {
   // localStorage.clear();
@@ -65,21 +67,34 @@ function renderBooks(books) {
 }
 
 const addProduct = (e) => {
-  if (!e.target.classList.contains("btn-add")) return;
-  // const addedBook = bookArray.find((x) => x.id == e.target.value);
-  const hasItem = cart.find((x) => x.id == e.target.value);
-  if (!hasItem) {
-    const cartItem = new CartItem(e.target.value, 1);
-    cart = [...cart, cartItem];
+  if (canAdd) {
+    canAdd = false;
+    if (!e.target.classList.contains("btn-add")) return;
+    // const addedBook = bookArray.find((x) => x.id == e.target.value);
+    const hasItem = cart.find((x) => x.id == e.target.value);
+    if (!hasItem) {
+      const cartItem = new CartItem(e.target.value, 1);
+      cart = [...cart, cartItem];
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart));
 
-    cartNumHead.innerHTML = cart.length;
-    cartNumSide.innerHTML = cart.length;
-  } else {
-    hasItem.amount++;
+      cartNumHead.innerHTML = cart.length;
+      cartNumSide.innerHTML = cart.length;
+      showNotification("El producto fue agregado al carrito");
+    } else {
+      hasItem.amount++;
+      showNotification("Se agregó una unidad del producto al carrito");
+    }
+    canAdd = true;
   }
-  console.log(cart);
+};
+
+const showNotification = (msg) => {
+  addNotif.classList.add("active-notif");
+  addNotif.textContent = msg;
+  setTimeout(() => {
+    addNotif.classList.remove("active-notif");
+  }, 1500);
 };
 
 // const test2 = (e) => {

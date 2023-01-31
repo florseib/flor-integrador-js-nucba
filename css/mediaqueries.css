@@ -49,6 +49,10 @@
     height: 3rem;
     width: 40%;
   }
+
+  .buy-btn-container {
+    width: 90%;
+  }
 }
 
 @media (min-width: 769px) {
@@ -61,5 +65,15 @@
 @media (min-width: 993px) {
   .cart-card {
     width: 80%;
+  }
+
+  .buy-btn-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 992px) {
+  .buy-btn-container button {
+    width: 100%;
   }
 }
