@@ -115,7 +115,11 @@ footer {
   align-items: center;
   justify-content: center;
   color: #f3f4f6;
-  background-color: green;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 128, 0, 1) 0%,
+    rgba(0, 255, 0, 1) 100%
+  );
   position: fixed;
   bottom: 1.5rem;
   width: 25rem;

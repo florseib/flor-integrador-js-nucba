@@ -11,10 +11,9 @@ const addNotif = document.querySelector(".add-notif");
 var categoryList;
 var cart;
 var canAdd = true;
+const timeoutTime = 1500;
 
 function init() {
-  // localStorage.clear();
-
   // cart = JSON.parse(localStorage.getItem("cart")) || [];
   cart = JSON.parse(localStorage.getItem("cart")) || [];
   categorySelect.addEventListener("change", changeSelect);
@@ -66,9 +65,8 @@ function renderBooks(books) {
   });
 }
 
-const addProduct = (e) => {
+const addProduct = async (e) => {
   if (canAdd) {
-    canAdd = false;
     if (!e.target.classList.contains("btn-add")) return;
     // const addedBook = bookArray.find((x) => x.id == e.target.value);
     const hasItem = cart.find((x) => x.id == e.target.value);
@@ -85,25 +83,17 @@ const addProduct = (e) => {
       hasItem.amount++;
       showNotification("Se agregó una unidad del producto al carrito");
     }
-    canAdd = true;
   }
 };
 
 const showNotification = (msg) => {
+  canAdd = false;
   addNotif.classList.add("active-notif");
   addNotif.textContent = msg;
   setTimeout(() => {
     addNotif.classList.remove("active-notif");
-  }, 1500);
+    canAdd = true;
+  }, timeoutTime);
 };
-
-// const test2 = (e) => {
-//   if (!e.target.classList.contains("btn-add")) return;
-//   console.log(e);
-// };
-
-// const test = (e) => {
-//   console.log(e);
-// };
 
 init();
