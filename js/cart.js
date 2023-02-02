@@ -6,7 +6,11 @@ const cartNumSide = document.querySelector("#cart-number-sidebar");
 const buyBtnContainer = document.querySelector(".buy-btn-container");
 
 const cartContainer = document.querySelector(".cart-container");
+const addNotif = document.querySelector(".add-notif");
+
 var cart;
+var canAdd = true;
+const timeoutTime = 1500;
 
 function init() {
   // localStorage.clear();
@@ -51,50 +55,74 @@ function renderBooks() {
 }
 
 const deleteProduct = (e) => {
-  if (!e.target.classList.contains("btn-delete")) return;
-  // const addedBook = bookArray.find((x) => x.id == e.target.value);
-  const deletedElement = cart.find((x) => x.id == e.target.value);
-  if (deletedElement) {
-    if (deletedElement.amount == 1) {
-      const deleteCard = document.querySelector("#card-" + deletedElement.id);
-      deleteCard.parentElement.removeChild(deleteCard);
+  if (canAdd) {
+    if (!e.target.classList.contains("btn-delete")) return;
+    // const addedBook = bookArray.find((x) => x.id == e.target.value);
+    const deletedElement = cart.find((x) => x.id == e.target.value);
+    if (deletedElement) {
+      if (deletedElement.amount === 1) {
+        if (window.confirm("Desea eliminar el producto del carrito?")) {
+          const deleteCard = document.querySelector(
+            "#card-" + deletedElement.id
+          );
+          deleteCard.parentElement.removeChild(deleteCard);
 
-      const index = cart.indexOf(deletedElement);
+          const index = cart.indexOf(deletedElement);
 
-      cart.splice(index, 1);
+          cart.splice(index, 1);
 
-      localStorage.setItem("cart", JSON.stringify(cart));
+          localStorage.setItem("cart", JSON.stringify(cart));
 
-      cartNumHead.innerHTML = cart.length;
-      cartNumSide.innerHTML = cart.length;
+          cartNumHead.innerHTML = cart.length;
+          cartNumSide.innerHTML = cart.length;
 
-      if (cart.length === 0) {
-        cartContainer.innerHTML += `<p>Tu carrito se encuentra vacío actualmente.</p>`;
-        buyBtnContainer.classList.add("hidden");
+          showNotification("Se eliminó el producto del carrito");
+
+          if (cart.length === 0) {
+            cartContainer.innerHTML += `<p>Tu carrito se encuentra vacío actualmente.</p>`;
+            buyBtnContainer.classList.add("hidden");
+          }
+        }
+      } else {
+        deletedElement.amount--;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        const amountCounter = document.querySelector(
+          "#amount-" + deletedElement.id
+        );
+        amountCounter.innerHTML = deletedElement.amount;
+        showNotification("Se eliminó una unidad del producto del carrito");
       }
-    } else {
-      deletedElement.amount--;
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      const amountCounter = document.querySelector(
-        "#amount-" + deletedElement.id
-      );
-      amountCounter.innerHTML = deletedElement.amount;
     }
   }
 };
 
 const addProduct = (e) => {
-  if (!e.target.classList.contains("btn-add")) return;
-  // const addedBook = bookArray.find((x) => x.id == e.target.value);
-  const addedElement = cart.find((x) => x.id == e.target.value);
-  if (addedElement) {
-    addedElement.amount++;
+  if (canAdd) {
+    if (!e.target.classList.contains("btn-add")) return;
+    // const addedBook = bookArray.find((x) => x.id == e.target.value);
+    const addedElement = cart.find((x) => x.id == e.target.value);
+    if (addedElement) {
+      addedElement.amount++;
 
-    localStorage.setItem("cart", JSON.stringify(cart));
-    const amountCounter = document.querySelector("#amount-" + addedElement.id);
-    amountCounter.innerHTML = addedElement.amount;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      const amountCounter = document.querySelector(
+        "#amount-" + addedElement.id
+      );
+      amountCounter.innerHTML = addedElement.amount;
+      showNotification("Se agregó una unidad del producto al carrito");
+    }
   }
+};
+
+const showNotification = (msg) => {
+  canAdd = false;
+  addNotif.classList.add("active-notif");
+  addNotif.textContent = msg;
+  setTimeout(() => {
+    addNotif.classList.remove("active-notif");
+    canAdd = true;
+  }, timeoutTime);
 };
 
 init();

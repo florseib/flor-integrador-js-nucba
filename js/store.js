@@ -81,6 +81,7 @@ const addProduct = async (e) => {
       showNotification("El producto fue agregado al carrito");
     } else {
       hasItem.amount++;
+      localStorage.setItem("cart", JSON.stringify(cart));
       showNotification("Se agregó una unidad del producto al carrito");
     }
   }
