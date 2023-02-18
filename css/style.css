@@ -121,16 +121,16 @@ footer {
     rgba(0, 255, 0, 1) 100%
   );
   position: fixed;
-  bottom: 1.5rem;
+  bottom: -8.5rem;
   width: 25rem;
   border-radius: 15px;
   text-align: center;
   transition: all 0.5s ease-out;
-  transform: translateY(200%);
+  transform: translateY(0);
 }
 
 .active-notif {
-  transform: translateY(0);
+  transform: translateY(-200%);
   transition: all 0.5s ease-in;
 }
 
