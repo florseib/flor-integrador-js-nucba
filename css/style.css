@@ -110,7 +110,7 @@ footer {
 
 .add-notif {
   height: 5rem;
-  padding: 15px 0px;
+  /* padding: 15px 0px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,7 +121,7 @@ footer {
     rgba(0, 255, 0, 1) 100%
   );
   position: fixed;
-  bottom: -8.5rem;
+  bottom: -5rem;
   width: 25rem;
   border-radius: 15px;
   text-align: center;
@@ -130,7 +130,7 @@ footer {
 }
 
 .active-notif {
-  transform: translateY(-200%);
+  transform: translateY(-150%);
   transition: all 0.5s ease-in;
 }
 
