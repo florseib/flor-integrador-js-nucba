@@ -1,9 +1,9 @@
 const errorNotif = document.querySelector(".error-notif");
-const loginButton = document.querySelector("#login-button");
+const registerButton = document.querySelector("#register-button");
 const timeoutTime = 1500;
 
 function init() {
-  loginButton.addEventListener("click", login);
+  registerButton.addEventListener("click", register);
 }
 
 const showRedNotification = (msg) => {
@@ -14,7 +14,7 @@ const showRedNotification = (msg) => {
   }, timeoutTime);
 };
 
-const login = (e) => {
+const register = (e) => {
   e.preventDefault();
   showRedNotification(
     "Lo sentimos, esta funcionalidad no se encuentra disponible actualmente."
