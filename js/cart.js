@@ -3,10 +3,12 @@ import { CartItem } from "./cartitem.js";
 
 const cartNumHead = document.querySelector("#cart-number-header");
 const cartNumSide = document.querySelector("#cart-number-sidebar");
-const buyBtnContainer = document.querySelector(".buy-btn-container");
+const buyBtnContainer = document.querySelector(".btn-buy-container");
+const buyBtn = document.querySelector(".btn-buy");
 
 const cartContainer = document.querySelector(".cart-container");
 const addNotif = document.querySelector(".add-notif");
+const errorNotif = document.querySelector(".error-notif");
 
 var cart;
 var canAdd = true;
@@ -20,6 +22,7 @@ function init() {
   renderBooks();
   cartContainer.addEventListener("click", deleteProduct);
   cartContainer.addEventListener("click", addProduct);
+  buyBtn.addEventListener("click", buy);
 }
 
 function renderBooks() {
@@ -76,7 +79,7 @@ const deleteProduct = (e) => {
           cartNumHead.innerHTML = cart.length;
           cartNumSide.innerHTML = cart.length;
 
-          showNotification("Se eliminó el producto del carrito");
+          showGreenNotification("Se eliminó el producto del carrito");
 
           if (cart.length === 0) {
             cartContainer.innerHTML += `<p>Tu carrito se encuentra vacío actualmente.</p>`;
@@ -91,7 +94,7 @@ const deleteProduct = (e) => {
           "#amount-" + deletedElement.id
         );
         amountCounter.innerHTML = deletedElement.amount;
-        showNotification("Se eliminó una unidad del producto del carrito");
+        showGreenNotification("Se eliminó una unidad del producto del carrito");
       }
     }
   }
@@ -110,19 +113,36 @@ const addProduct = (e) => {
         "#amount-" + addedElement.id
       );
       amountCounter.innerHTML = addedElement.amount;
-      showNotification("Se agregó una unidad del producto al carrito");
+      showGreenNotification("Se agregó una unidad del producto al carrito");
     }
   }
 };
 
-const showNotification = (msg) => {
+const showGreenNotification = (msg) => {
   canAdd = false;
-  addNotif.classList.add("active-notif");
-  addNotif.textContent = msg;
+  errorNotif.classList.remove("active-notif");
   setTimeout(() => {
-    addNotif.classList.remove("active-notif");
-    canAdd = true;
+    addNotif.classList.add("active-notif");
+    addNotif.textContent = msg;
+    setTimeout(() => {
+      addNotif.classList.remove("active-notif");
+      canAdd = true;
+    }, timeoutTime);
+  }, 550);
+};
+
+const showRedNotification = (msg) => {
+  errorNotif.classList.add("active-notif");
+  errorNotif.textContent = msg;
+  setTimeout(() => {
+    errorNotif.classList.remove("active-notif");
   }, timeoutTime);
+};
+
+const buy = (e) => {
+  showRedNotification(
+    "Lo sentimos, esta funcionalidad no se encuentra disponible actualmente."
+  );
 };
 
 init();

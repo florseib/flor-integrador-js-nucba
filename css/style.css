@@ -108,25 +108,39 @@ footer {
   bottom: 0px;
 }
 
-.add-notif {
-  height: 5rem;
+.notif {
   /* padding: 15px 0px; */
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f3f4f6;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 128, 0, 1) 0%,
-    rgba(0, 255, 0, 1) 100%
-  );
   position: fixed;
-  bottom: -5rem;
+  color: #f3f4f6;
   width: 25rem;
   border-radius: 15px;
   text-align: center;
   transition: all 0.5s ease-out;
   transform: translateY(0);
+}
+
+.add-notif {
+  height: 5rem;
+  bottom: -5rem;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 128, 0, 1) 0%,
+    rgba(0, 255, 0, 1) 100%
+  );
+}
+
+.error-notif {
+  height: 6rem;
+  bottom: -6rem;
+  background: rgb(255, 98, 88);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 98, 88, 1) 0%,
+    rgba(255, 0, 0, 1) 100%
+  );
 }
 
 .active-notif {
