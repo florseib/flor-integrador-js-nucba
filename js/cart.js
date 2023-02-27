@@ -12,6 +12,7 @@ const errorNotif = document.querySelector(".error-notif");
 
 var cart;
 var canAdd = true;
+var showErrorNotif = true;
 const timeoutTime = 1500;
 
 function init() {
@@ -132,11 +133,15 @@ const showGreenNotification = (msg) => {
 };
 
 const showRedNotification = (msg) => {
-  errorNotif.classList.add("active-notif");
-  errorNotif.textContent = msg;
-  setTimeout(() => {
-    errorNotif.classList.remove("active-notif");
-  }, timeoutTime);
+  if (showErrorNotif) {
+    showErrorNotif = false;
+    errorNotif.classList.add("active-notif");
+    errorNotif.textContent = msg;
+    setTimeout(() => {
+      errorNotif.classList.remove("active-notif");
+      showErrorNotif = true;
+    }, timeoutTime);
+  }
 };
 
 const buy = (e) => {
