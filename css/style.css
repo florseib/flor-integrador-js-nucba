@@ -44,7 +44,6 @@ header {
   background-color: rgb(255, 255, 90);
 
   margin: 0;
-  /* text-decoration: none; */
   list-style-type: none;
 }
 
@@ -98,7 +97,6 @@ footer {
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* background-color: rgb(255, 157, 38); */
   background-color: rgb(255, 145, 0);
   height: 7.5vh;
   margin-top: auto;
@@ -108,8 +106,9 @@ footer {
   bottom: 0px;
 }
 
+/* De acá para abajo no está nada porteado, salvo el media de 400px */
+
 .notif {
-  /* padding: 15px 0px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,14 +148,6 @@ footer {
 }
 
 @media (max-width: 400px) {
-  /* body {
-        padding-top: 85px;
-    }
-
-    header {
-        height: 70px;
-    } */
-
   .account-links {
     width: 60%;
     padding-right: 0px;
